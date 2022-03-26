@@ -165,17 +165,17 @@ scp -r hadoop-3.1.4 root@node2:/export/server/
 scp -r hadoop-3.1.4 root@node3:/export/server/  
 
 （12）配置Hadoop环境变量（node1做）   
-vim /etc/profile
+vim /etc/profile   
 ····java
 export HADOOP_HOME=/export/server/hadoop-3.1.4
 export PATH=$PATH:$HADOOP_HOME/bin:$HADOOP_HOME/sbin
 ····
 
-将修改后的环境变量同步其他机器（node1做） 
+将修改后的环境变量同步其他机器（node1做）   
 scp /etc/profile root@node2:/etc/
 scp /etc/profile root@node3:/etc/
 
-重新加载环境变量 验证是否生效（3台都做）	
+重新加载环境变量 验证是否生效（3台都做）  	
 source /etc/profile
 hadoop #验证环境变量是否生效
  
@@ -187,17 +187,16 @@ format本质上是初始化工作，进行HDFS清理和准备工作
 首次启动之前需要format操作，format只能进行一次 后续不再需要，如果多次format除了造成数据丢失外，还会导致hdfs集群主从角色之间互不识别，通过删除所有机器hadoop.tmp.dir目录重新forma解决。  
 
 （14）每台机器上每次手动启动关闭一个角色进程
-
-HDFS集群
+* HDFS集群  
 hdfs --daemon start namenode|datanode|secondarynamenode  
 hdfs --daemon stop  namenode|datanode|secondarynamenode  
-
-YARN集群
+ 
+* YARN集群  
 yarn --daemon start resourcemanager|nodemanager  
 yarn --daemon stop  resourcemanager|nodemanager  
 
-（14）node1上，使用软件自带的shell脚本一键启动
-前提：配置好机器之间的SSH免密登录和workers文件。
+（14）node1上，使用软件自带的shell脚本一键启动  
+前提：配置好机器之间的SSH免密登录和workers文件。  
 * HDFS集群  
 start-dfs.sh 
 stop-dfs.sh 
