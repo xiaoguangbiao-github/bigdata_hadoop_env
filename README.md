@@ -199,13 +199,13 @@ yarn --daemon stop  resourcemanager|nodemanager
 （2）node1上，使用软件自带的shell脚本一键启动  
 前提：配置好机器之间的SSH免密登录和workers文件。  
 * HDFS集群  
-start-dfs.sh 
+start-dfs.sh   
 stop-dfs.sh 
 * YARN集群  
-start-yarn.sh
+start-yarn.sh  
 stop-yarn.sh
 * Hadoop集群  
-start-all.sh
+start-all.sh  
 stop-all.sh 
 
 ### 4.4、查看 
