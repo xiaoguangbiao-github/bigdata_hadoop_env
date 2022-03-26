@@ -21,9 +21,11 @@ vim /etc/hostname  #分别设置node1、node2、node3
 
 （2）配置Hosts映射（3台都做）  
 vim /etc/hosts  
+````java
 172.16.206.198 node1  
 172.16.206.205 node2  
 172.16.206.204 node3  
+````
 
 （3）关闭防火墙（3台都做）    
 systemctl stop firewalld.service   #关闭防火墙   
@@ -42,7 +44,7 @@ ntpdate ntp4.aliyun.com
 （6）jdk环境准备（3台都做）  
 https://www.cnblogs.com/ljxt/p/11612636.html  
 
-（7）创建统一目录（3台都做） 
+（7）创建统一目录（3台都做）  
 mkdir -p /export/server/    #软件安装路径  
 mkdir -p /export/data/      #数据存储路径  
 mkdir -p /export/software/  #安装包存放路径  
@@ -51,7 +53,7 @@ mkdir -p /export/software/  #安装包存放路径
 hadoop-3.1.4-bin-snappy-CentOS7.tar.gz  
 tar zxvf hadoop-3.1.4-bin-snappy-CentOS7.tar.gz -C /export/server/  
 
-（9）编辑Hadoop配置文件（node1做） 
+（9）编辑Hadoop配置文件（node1做）   
 cd /export/server/hadoop-3.1.4/etc/hadoop/  
 vim ......
 
@@ -147,7 +149,7 @@ export YARN_NODEMANAGER_USER=root
 </property>
 ````
 
-（10）编辑Hadoop配置文件（node1做） 
+（10）编辑Hadoop配置文件（node1做）   
 cd /export/server/hadoop-3.1.4/etc/hadoop/  
 vim workers  
 ````java
@@ -156,16 +158,18 @@ node2
 node3
 ````
 
-（11）分发同步安装包（node1做） 
+（11）分发同步安装包（node1做）   
 在node1机器上将Hadoop安装包scp同步到其他机器  
 cd /export/server/  
 scp -r hadoop-3.1.4 root@node2:/export/server/  
 scp -r hadoop-3.1.4 root@node3:/export/server/  
 
-（12）配置Hadoop环境变量（node1做） 
+（12）配置Hadoop环境变量（node1做）   
 vim /etc/profile
+····java
 export HADOOP_HOME=/export/server/hadoop-3.1.4
 export PATH=$PATH:$HADOOP_HOME/bin:$HADOOP_HOME/sbin
+····
 
 将修改后的环境变量同步其他机器（node1做） 
 scp /etc/profile root@node2:/etc/
@@ -174,8 +178,8 @@ scp /etc/profile root@node3:/etc/
 重新加载环境变量 验证是否生效（3台都做）	
 source /etc/profile
 hadoop #验证环境变量是否生效
-
-（13）NameNode format格式化操作（node1做） 
+ 
+（13）NameNode format格式化操作（node1做）   
 首次启动HDFS时，必须对其进行格式化操作。
 format本质上是初始化工作，进行HDFS清理和准备工作  
 命令：hdfs namenode -format
@@ -185,22 +189,22 @@ format本质上是初始化工作，进行HDFS清理和准备工作
 （14）每台机器上每次手动启动关闭一个角色进程
 
 HDFS集群
-hdfs --daemon start namenode|datanode|secondarynamenode
-hdfs --daemon stop  namenode|datanode|secondarynamenode
+hdfs --daemon start namenode|datanode|secondarynamenode  
+hdfs --daemon stop  namenode|datanode|secondarynamenode  
 
 YARN集群
-yarn --daemon start resourcemanager|nodemanager
-yarn --daemon stop  resourcemanager|nodemanager
+yarn --daemon start resourcemanager|nodemanager  
+yarn --daemon stop  resourcemanager|nodemanager  
 
 （14）node1上，使用软件自带的shell脚本一键启动
 前提：配置好机器之间的SSH免密登录和workers文件。
-* HDFS集群
+* HDFS集群  
 start-dfs.sh 
 stop-dfs.sh 
-* YARN集群
+* YARN集群  
 start-yarn.sh
 stop-yarn.sh
-* Hadoop集群
+* Hadoop集群  
 start-all.sh
 stop-all.sh 
 
