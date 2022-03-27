@@ -26,6 +26,7 @@ vim /etc/hosts
 172.16.206.205 node2  
 172.16.206.204 node3  
 ````
+特别注意：阿里云ECS等公有云上搭建Hadoop集群环境，/etc/hosts必须配置彼此的实例id,否则启动会报错host不识别  
 
 （3）关闭防火墙（3台都做）    
 systemctl stop firewalld.service   #关闭防火墙   
